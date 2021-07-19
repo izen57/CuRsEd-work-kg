@@ -9,10 +9,11 @@ namespace practica
     class ZBuffer
     {
         public int width, height;
+
         int wh;
         double zNear, zFar;
         UInt64[] B; // буфер цвета
-        double[] Z; // буфер глубина
+        double[] Z; // буфер глубины
 
         public ZBuffer(int w, int h, double z0, double z1)
         {
@@ -26,7 +27,7 @@ namespace practica
             Z = new double[wh];
         }
 
-        public UInt64[] ColorBuffer()
+        public UInt64[] GetColorBuffer()
         {
             return B;
         }
@@ -44,15 +45,13 @@ namespace practica
         {
             double k = (z1 - z0) / (X1 - X0);
             double z = z0;
-            int i = width * Y + X0;
-            for (int X = X0; X <= X1; ++X, z += k, i++)
-            {
+
+            for (int X = X0, i = width * Y + X0; X <= X1; ++X, z += k, i++)
                 if (z < Z[i])
                 {
                     Z[i] = z;
                     B[i] = color;
                 }
-            }
         }
 
         public void Triangle(UInt64 color, double x0, double y0, double z0, double x1, double y1, double z1, double x2, double y2, double z2, int orientation = 1)
@@ -65,7 +64,7 @@ namespace practica
 
             if (y2 < y0 && y2 < y1)
             {
-                Triangle(color, x2, y2, z2, x0, y0, z0, x1, y1, z1, orientation);
+                Triangle(color, x2, y2, z2, x0, y0, z0, x1, y1, z1);
                 return;
             }
 

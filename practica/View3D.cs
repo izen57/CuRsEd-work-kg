@@ -19,7 +19,7 @@ namespace practica
 
         public UInt64[] ColorBuffer()
         {
-            return ZB.ColorBuffer();
+            return ZB.GetColorBuffer();
         }
 
         public void SetViewPort(int w, int h)
