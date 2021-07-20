@@ -54,7 +54,6 @@ namespace practica
 
         private void Redraw()
         {
-            
             view.Display();
         }
     }
