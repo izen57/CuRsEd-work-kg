@@ -6,11 +6,6 @@ using System.Threading.Tasks;
 
 namespace practica
 {
-
-    class A
-    {
-        public int x = 2;
-    }
     class View3D
     {
         ZBuffer ZB;
@@ -37,17 +32,8 @@ namespace practica
             ZB.Clear(Graphicx.ColorToInt(c));
         }
 
-        void F(A a)
-        {
-/*            a = new A();
-*/            a.x = 5;
-        }
-
         public void Display()
         {
-            A a = new A();
-            F(a);
-            int y = a.x;
             Clear(Color.Green);
             ZB.Triangle(Graphicx.ColorToInt(Color.Red), 0, 0, 1, 200, 0, 1, 100, 175, 1);
         }
