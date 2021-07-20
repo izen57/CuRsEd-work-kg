@@ -43,6 +43,24 @@ namespace practica
 
         public void RasterizeSegment(int Y, int X0, int X1, double z0, double z1, UInt64 color)
         {
+            if (X1 < X0)
+            {
+                int temp = X1;
+                X1 = X0;
+                X0 = temp;
+
+                double temp1 = z0;
+                z0 = z1;
+                z1 = temp1;
+            }
+            if (X1 < 0 || X0 >= width)
+                return;
+
+            if (X0 < 0)
+                X0 = 0;
+            if (X1 >= width)
+                X1 = width - 1;
+
             double k = (z1 - z0) / (X1 - X0);
             double z = z0;
 
@@ -78,24 +96,47 @@ namespace practica
             int Y1 = (int) Math.Round(y1);
             int Y2 = (int) Math.Round(y2);
 
+            if (Y2 < 0 || Y0 >= height)
+                return;
+
             double k01 = (x1 - x0) / (y1 - y0);
             double k02 = (x2 - x0) / (y2 - y0);
+            double k12 = (x2 - x1) / (y2 - y1);
             double a01 = x0 - k01 * y1;
             double a02 = x0 - k02 * y0;
+            double a12 = x1 - k12 * y1;
+            double c01 = (z1 - z0) / (y1 - y0);
+            double c02 = (z2 - z0) / (y2 - y0);
+            double c12 = (z2 - z1) / (y2 - y1);
+            double b01 = z0 - c01 * y1;
+            double b02 = z0 - c02 * y0;
+            double b12 = z1 - c12 * y1;
+            
+            if (Y1 >= 0)
+                for (int Y = Y0 > 0? Y0 : 0; Y < Y1; ++Y)
+                {
+                    double xleft = a02 + k02 * Y;
+                    double xright = a01 + k01 * Y;
+                    double zleft = b02 + c02 * Y;
+                    double zright = b01 + c01 * Y;
 
-            for (int Y = Y0; Y < Y1; ++Y)
-            {
-                double xleft = a02 + k02 * Y;
-                double xright = a01 + k01 * Y;
+                    int Xleft = (int) xleft;
+                    int Xright = (int) xright;
+                    RasterizeSegment(Y, Xleft, Xright, zleft, zright, color);
+                }
 
-                int Xleft = (int) xleft;
-                int Xright = (int) xright;
-            }
+            if (Y1 < height)
+                for (int Y = Y1; Y <= Y2 && Y < height; ++Y)
+                {
+                    double xleft = a02 + k02 * Y;
+                    double xright = a12 + k12 * Y;
+                    double zleft = b02 + c02 * Y;
+                    double zright = b12 + c12 * Y;
 
-            for (int Y = Y1; Y <= Y2; ++Y)
-            {
-
-            }
+                    int Xleft = (int)xleft;
+                    int Xright = (int)xright;
+                    RasterizeSegment(Y, Xleft, Xright, zleft, zright, color);
+                }
         }
     }
 }

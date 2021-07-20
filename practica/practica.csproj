@@ -53,8 +53,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Graphicx.cs" />
+    <Compile Include="Matrix4D.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vector4D.cs" />
     <Compile Include="View3D.cs" />
     <Compile Include="ZBuffer.cs" />
     <EmbeddedResource Include="Form1.resx">

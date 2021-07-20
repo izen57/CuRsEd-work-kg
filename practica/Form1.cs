@@ -54,7 +54,8 @@ namespace practica
 
         private void Redraw()
         {
-            view.Clear(Color.Green);
+            
+            view.Display();
         }
     }
 }
