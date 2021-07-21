@@ -27,6 +27,7 @@ namespace practica
             this.z = z;
             w = 0;
         }
+
         public static Vector4D Point(double x, double y, double z)
         {
             return new Vector4D(x, y, z, 1);
