@@ -38,12 +38,12 @@ namespace practica
             return new Vector4D();
         }
 
-        public static Vector4D operator  + (Vector4D A, Vector4D B)
+        public static Vector4D operator + (Vector4D A, Vector4D B)
         {
             return new Vector4D(A.x + B.x, A.y + B.y, A.z + B.z, A.w + B.w);
         }
 
-        public static Vector4D operator  - (Vector4D A, Vector4D B)
+        public static Vector4D operator - (Vector4D A, Vector4D B)
         {
             return new Vector4D(A.x - B.x, A.y - B.y, A.z - B.z, A.w - B.w);
         }
