@@ -8,20 +8,21 @@ namespace practica
 {
     class ZBuffer
     {
-        public int width, height;
+        readonly int wh;
+        readonly UInt64[] B; // буфер цвета
+        readonly double[] Z; // буфер глубины
 
-        int wh;
-        double zNear, zFar;
-        UInt64[] B; // буфер цвета
-        double[] Z; // буфер глубины
+        public int width, height;
+        public double ZNear { get; private set; }
+        public double ZFar { get; set; }
 
         public ZBuffer(int w, int h, double z0, double z1)
         {
             width = w;
             height = h;
             // depth = 1024;
-            zNear = z0;
-            zFar = z1;
+            ZNear = z0;
+            ZFar = z1;
             wh = width * height;
             B = new UInt64[wh];
             Z = new double[wh];
@@ -37,7 +38,7 @@ namespace practica
             for (int i = 0; i < wh; ++i)
             {
                 B[i] = color;
-                Z[i] = zFar;
+                Z[i] = ZFar;
             }
         }
 

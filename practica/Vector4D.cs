@@ -8,24 +8,25 @@ namespace practica
 {
     class Vector4D
     {
-        public double x, y, z, w;
+        public readonly double X, Y, Z, W; // где применять свойства и где readonly
+        // double[] arr = new double[4] { X, Y, Z, W }; // почему нельзя так
 
         public Vector4D() {}
 
         public Vector4D(double x, double y, double z, double w)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
         }
 
         public Vector4D(double x, double y, double z)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            w = 0;
+            X = x;
+            Y = y;
+            Z = z;
+            W = 0;
         }
 
         public static Vector4D Point(double x, double y, double z)
@@ -40,32 +41,32 @@ namespace practica
 
         public static Vector4D operator + (Vector4D A, Vector4D B)
         {
-            return new Vector4D(A.x + B.x, A.y + B.y, A.z + B.z, A.w + B.w);
+            return new Vector4D(A.X + B.X, A.Y + B.Y, A.Z + B.Z, A.W + B.W);
         }
 
         public static Vector4D operator - (Vector4D A, Vector4D B)
         {
-            return new Vector4D(A.x - B.x, A.y - B.y, A.z - B.z, A.w - B.w);
+            return new Vector4D(A.X - B.X, A.Y - B.Y, A.Z - B.Z, A.W - B.W);
         }
 
         public static Vector4D operator / (Vector4D A, double k)
         {
-            return new Vector4D(A.x / k, A.y / k, A.z / k, A.w / k);
+            return new Vector4D(A.X / k, A.Y / k, A.Z / k, A.W / k);
         }
 
         public static Vector4D operator * (Vector4D A, double k)
         {
-            return new Vector4D(A.x * k, A.y * k, A.z * k, A.w * k);
+            return new Vector4D(A.X * k, A.Y * k, A.Z * k, A.W * k);
         }
 
         public static Vector4D operator * (double k, Vector4D A)
         {
-            return new Vector4D(A.x * k, A.y * k, A.z * k, A.w * k);
+            return new Vector4D(A.X * k, A.Y * k, A.Z * k, A.W * k);
         }
 
         public double Lenght3D()
         {
-            return Math.Sqrt(x * x + y * y + z * z);
+            return Math.Sqrt(X * X + Y * Y + Z * Z);
         }
 
         public Vector4D Normalized3D()
@@ -75,12 +76,12 @@ namespace practica
 
         public double Dot3D(Vector4D A) // скалярное произв.
         {
-            return A.x * x + A.y * y + A.z * z;
+            return A.X * X + A.Y * Y + A.Z * Z;
         }
 
         public Vector4D Cross3D(Vector4D A) // векторное произв.
         {
-            return new Vector4D(y * A.z - z * A.y, z * A.x - x * A.z, x * A.y - y * A.x);
+            return new Vector4D(Y * A.Z - Z * A.Y, Z * A.X - X * A.Z, X * A.Y - Y * A.X);
         }
     }
 }

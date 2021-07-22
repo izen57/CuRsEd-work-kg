@@ -8,9 +8,17 @@ namespace practica
 {
     class Matrix4D
     {
-        double[,] m = new double[4, 4];
+        /*
+         Ссылочные типы содержат только ссылку на соответствующие данные,
+         а значит поле readonly ссылочного типа будет всегда ссылаться на один объект.
+         Но сам этот объект не является неизменяемым.
+         Модификатор readonly запрещает замену поля другим экземпляром ссылочного типа.
+         Но этот модификатор не препятствует изменению данных экземпляра,
+         на которое ссылается поле только для чтения, в том числе через это поле.
+         */
+        readonly double[,] m = new double[4, 4];
 
-        public Matrix4D() {}
+        public Matrix4D() { }
 
         public static Matrix4D Zero()
         {
@@ -31,31 +39,75 @@ namespace practica
         public static Matrix4D Identity()
         {
             var A = new Matrix4D();
-            A.m[0, 0] = 1;
-            A.m[1, 1] = 1;
-            A.m[2, 2] = 1;
-            A.m[3, 3] = 1;
+            A[0, 0] = 1;
+            A[1, 1] = 1;
+            A[2, 2] = 1;
+            A[3, 3] = 1;
 
             return A;
         }
 
+        public static Matrix4D Diagonal(double a0, double a1, double a2, double a3)
+        {
+            var A = new Matrix4D();
+            A[0, 0] = a0;
+            A[1, 1] = a1;
+            A[2, 2] = a2;
+            A[3, 3] = a3;
+
+            return A;
+        }
+
+        public double this[int i, int j]
+        {
+            get
+            {
+                return m[i, j];
+            }
+            set
+            {
+                m[i, j] = value;
+            }
+        }
+
         public static Matrix4D operator * (Matrix4D A, Matrix4D B)
         {
-            var C = new Matrix4D();
+            Matrix4D C = new Matrix4D();
             for (int i = 0; i < 4; ++i)
                 for (int j = 0; j < 4; ++j)
                 {
-                    double s = 0;
+                    double sum = 0;
                     for (int k = 0; k < 4; ++k)
-                        s += A.m[i, k] * B.m[k, j];
+                        sum += A[i, k] * B[k, j];
 
-                    C.m[i, j] = s;
+                    C[i, j] = sum;
                 }
 
             return C;
         }
 
-        public Matrix4D LookAt(Vector4D eye, Vector4D at, Vector4D up)
+        public static Vector4D operator * (Matrix4D A, Vector4D B)
+        {
+            // как лучше инициализировать поля: напрямую или через конструктор?
+            //Vector4D C = new Vector4D
+            //{
+            //    X = A[0, 0] * B.X + A[0, 1] * B.Y + A[0, 2] * B.Z + A[0, 3] * B.W,
+            //    Y = A[1, 0] * B.X + A[1, 1] * B.Y + A[1, 2] * B.Z + A[1, 3] * B.W,
+            //    Z = A[2, 0] * B.X + A[2, 1] * B.Y + A[2, 2] * B.Z + A[2, 3] * B.W,
+            //    W = A[3, 0] * B.X + A[3, 1] * B.Y + A[3, 2] * B.Z + A[3, 3] * B.W
+            //};
+            Vector4D C = new Vector4D
+            (
+                A[0, 0] * B.X + A[0, 1] * B.Y + A[0, 2] * B.Z + A[0, 3] * B.W,
+                A[1, 0] * B.X + A[1, 1] * B.Y + A[1, 2] * B.Z + A[1, 3] * B.W,
+                A[2, 0] * B.X + A[2, 1] * B.Y + A[2, 2] * B.Z + A[2, 3] * B.W,
+                A[3, 0] * B.X + A[3, 1] * B.Y + A[3, 2] * B.Z + A[3, 3] * B.W
+            );
+
+            return C;
+        }
+
+        public static Matrix4D LookAt(Vector4D eye, Vector4D at, Vector4D up)
         {
             Vector4D zaxis = (at - eye).Normalized3D();
             Vector4D xaxis = zaxis.Cross3D(up);
@@ -64,9 +116,9 @@ namespace practica
             // negate(zaxis);
             zaxis = zaxis * (-1);
 
-            return new Matrix4D(xaxis.x, xaxis.y, xaxis.z, -xaxis.Dot3D(eye),
-                yaxis.x, yaxis.y, yaxis.z, -yaxis.Dot3D(eye),
-                zaxis.x, zaxis.y, zaxis.z, -zaxis.Dot3D(eye),
+            return new Matrix4D(xaxis.X, xaxis.Y, xaxis.Z, -xaxis.Dot3D(eye),
+                yaxis.X, yaxis.Y, yaxis.Z, -yaxis.Dot3D(eye),
+                zaxis.X, zaxis.Y, zaxis.Z, -zaxis.Dot3D(eye),
                 0, 0, 0, 1);
         }
     }
