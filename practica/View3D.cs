@@ -94,7 +94,7 @@ namespace practica
             Draw();
         }
         #region Primitives
-        private void Triangle(Color c, Vector4D p0, Vector4D p1, Vector4D p2)
+        void Triangle(Color c, Vector4D p0, Vector4D p1, Vector4D p2)
         {
             var q0 = /*T **/GetScreenCoordinates(p0);
             var q1 = GetScreenCoordinates(p1);
@@ -103,7 +103,7 @@ namespace practica
             ZB.Triangle(Graphicx.ColorToInt(c), (int)q0.X, (int)q0.Y, (int)q0.Z, (int)q1.X, (int)q1.Y, (int)q1.Z, (int)q2.X, (int)q2.Y, (int)q2.Z);
         }
 
-        private void Line(Color c, Vector4D p0, Vector4D p1)
+        void Line(Color c, Vector4D p0, Vector4D p1)
         {
             var q0 = /*T **/GetScreenCoordinates(p0); // перегрузить return vector4d
             var q1 = GetScreenCoordinates(p1);
