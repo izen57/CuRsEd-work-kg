@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace practica
 {
+    /**/
     class ZBuffer
     {
         readonly int wh;
@@ -138,6 +139,35 @@ namespace practica
                     int Xright = (int)xright;
                     RasterizeSegment(Y, Xleft, Xright, zleft, zright, color);
                 }
+        }
+
+        public void Line(UInt64 color, double x0, double y0, double z0, double x1, double y1, double z1)
+        {
+            if (x0 > x1)
+            {
+                Line(color, x1, y1, z1, x0, y0, z0);
+                return;
+            }
+
+            int X0 = (int)x0;
+            int X1 = (int)x1;
+
+            for (int X = X0; X <= X0; ++X)
+            {
+                double y = y0 + (y1 - y0) * (X - x0) / (x1 - x0);
+                double z = z0 + (z1 - z0) * (X - x0) / (x1 - x0);
+                int Y = (int)y;
+
+                if (X < 0 || X >= width || Y < 0 || Y >= height)
+                    continue;
+                int i = Y * width + X;
+
+                if (z < Z[i])
+                {
+                    Z[i] = z;
+                    B[i] = color;
+                }
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace practica
 {
     public partial class Form1 : Form
     {
-        View3D view = new View3D();
+        readonly View3D view = new View3D();
 
         public Form1()
         {

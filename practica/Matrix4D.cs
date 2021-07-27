@@ -107,6 +107,16 @@ namespace practica
             return C;
         }
 
+        public static Matrix4D Translation(double x, double y, double z)
+        {
+            var a = Matrix4D.Identity();
+            a[0, 3] = x;
+            a[1, 3] = y;
+            a[2, 3] = z;
+
+            return a;
+        }
+
         public static Matrix4D LookAt(Vector4D eye, Vector4D at, Vector4D up)
         {
             Vector4D zaxis = (at - eye).Normalized3D();
@@ -116,10 +126,13 @@ namespace practica
             // negate(zaxis);
             zaxis = zaxis * (-1);
 
-            return new Matrix4D(xaxis.X, xaxis.Y, xaxis.Z, -xaxis.Dot3D(eye),
+            return new Matrix4D
+            (
+                xaxis.X, xaxis.Y, xaxis.Z, -xaxis.Dot3D(eye),
                 yaxis.X, yaxis.Y, yaxis.Z, -yaxis.Dot3D(eye),
                 zaxis.X, zaxis.Y, zaxis.Z, -zaxis.Dot3D(eye),
-                0, 0, 0, 1);
+                0, 0, 0, 1
+            );
         }
     }
 }
