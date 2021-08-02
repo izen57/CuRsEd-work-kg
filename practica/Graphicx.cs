@@ -23,10 +23,10 @@ namespace practica
 
         public static Color IntToColor(UInt64 a)
         {
-            byte r = (byte)(a >> 48);
-            byte g = (byte)(a >> 32);
-            byte b = (byte)(a >> 16);
-            byte alpha = (byte)a;
+            byte r = (byte) (a >> 48);
+            byte g = (byte) (a >> 32);
+            byte b = (byte) (a >> 16);
+            byte alpha = (byte) a;
 
             return Color.FromArgb(alpha, r, g, b);
         }

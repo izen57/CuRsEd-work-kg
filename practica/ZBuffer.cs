@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace practica
 {
-    /**/
     class ZBuffer
     {
         readonly int wh;
@@ -14,8 +13,8 @@ namespace practica
         readonly double[] Z; // буфер глубины
 
         public int width, height;
-        public double ZNear { get; private set; }
-        public double ZFar { get; set; }
+        public double ZNear {get; private set;}
+        public double ZFar {get; set;}
 
         public ZBuffer(int w, int h, double z0, double z1)
         {
@@ -135,8 +134,8 @@ namespace practica
                     double zleft = b02 + c02 * Y;
                     double zright = b12 + c12 * Y;
 
-                    int Xleft = (int)xleft;
-                    int Xright = (int)xright;
+                    int Xleft = (int) xleft;
+                    int Xright = (int) xright;
                     RasterizeSegment(Y, Xleft, Xright, zleft, zright, color);
                 }
         }
@@ -149,8 +148,8 @@ namespace practica
                 return;
             }
 
-            int X0 = (int)x0;
-            int X1 = (int)x1;
+            int X0 = (int) x0;
+            int X1 = (int) x1;
 
             for (int X = X0; X <= X0; ++X)
             {

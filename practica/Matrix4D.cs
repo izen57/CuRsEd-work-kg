@@ -18,7 +18,7 @@ namespace practica
          */
         readonly double[,] m = new double[4, 4];
 
-        public Matrix4D() { }
+        public Matrix4D() {}
 
         public static Matrix4D Zero()
         {
